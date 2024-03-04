@@ -1,0 +1,136 @@
+<!-- StudentDashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkmeng - Student Dashboard</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <style>
+      .hero {
+        background-image: url("https://via.placeholder.com/1500x500");
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        padding: 100px 0;
+      }
+      .btn-update {
+        margin-bottom: 20px;
+      }
+      .course-score {
+        margin-bottom: 20px;
+      }
+      .profile-pic {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+      }
+      .result-doc {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <!-- Student Navbar goes here -->
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Welcome to Your Dashboard</h1>
+        <img
+          src="https://via.placeholder.com/150"
+          alt="Profile Picture"
+          class="profile-pic"
+        />
+        <h3>John Doe</h3>
+        <!-- Replace with student's name -->
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container">
+      <h2 class="my-4">Your Details</h2>
+      <a href="#" class="btn btn-primary btn-update">Update Details</a>
+      <!-- Display student details here -->
+
+      <h2 class="my-4">Courses and Scores</h2>
+      <div class="course-score">
+        <!-- Display courses and scores dynamically -->
+        <div class="row">
+          <div class="col-md-6">
+            <p>Course 1: Math</p>
+          </div>
+          <div class="col-md-6">
+            <p>Score: 95%</p>
+          </div>
+        </div>
+        <!-- Add more courses and scores -->
+      </div>
+
+      <h2 class="my-4">Recent Results</h2>
+      <div class="result-doc">
+        <!-- Display recent results here -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Result Date: January 1, 2024</h5>
+            <!-- Add details of the result -->
+            <p class="card-text">Math: 95%</p>
+            <p class="card-text">Science: 85%</p>
+            <!-- Add more subjects and scores -->
+            <button class="btn btn-primary" onclick="downloadResult()">
+              Download Result
+            </button>
+            <!-- Button to download result -->
+          </div>
+        </div>
+        <!-- Add more recent results -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer goes here -->
+
+    <!-- <script> -->
+    //   /<!-- Add this script tag to the bottom of your HTML body -->
+<script>
+    // JavaScript code to parse dashboard content to a PDF document
+    function downloadResult() {
+        // Get the recent result content
+        var resultContent = document.querySelector('.result-doc .card-body').innerHTML;
+
+        // Define the document definition
+        var docDefinition = {
+            content: [
+                { text: 'Recent Result', style: 'header' },
+                { text: resultContent, margin: [0, 20] }
+            ],
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    alignment: 'center',
+                    margin: [0, 0, 0, 20]
+                }
+            }
+        };
+
+        // Generate PDF document
+        pdfmake.createPdf(docDefinition).download('recent_result.pdf');
+    }
+</script>
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

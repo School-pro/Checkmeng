@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkmeng - Admin Panel</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Add custom styles for admin panel */
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <!-- Admin Navbar goes here -->
+
+    <!-- Main Content -->
+    <section class="container">
+      <h1>Admin Panel</h1>
+      <div>
+        <h2>Post Results</h2>
+        <!-- Form to post results -->
+        <form id="postResultsForm">
+          <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text" class="form-control" id="studentName" required />
+          </div>
+          <div class="form-group">
+            <label for="mathScore">Math Score</label>
+            <input type="number" class="form-control" id="mathScore" required />
+          </div>
+          <!-- Add more input fields for other subjects -->
+          <button type="submit" class="btn btn-primary">Post Result</button>
+        </form>
+      </div>
+      <!-- Add more sections and functionalities for the admin panel -->
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer goes here -->
+
+    <script>
+      // JavaScript code for admin panel functionalities
+      document
+        .getElementById("postResultsForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          // Retrieve form data
+          var studentName = document.getElementById("studentName").value;
+          var mathScore = document.getElementById("mathScore").value;
+          // Example: Send data to server or perform desired action
+          console.log("Student Name:", studentName);
+          console.log("Math Score:", mathScore);
+          // Clear form fields after submission
+          document.getElementById("studentName").value = "";
+          document.getElementById("mathScore").value = "";
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
