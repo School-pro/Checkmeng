@@ -1,0 +1,94 @@
+<!-- Signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkmeng - Signup</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .signup-form {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+
+      .oauth-icons a {
+        margin-right: 10px;
+        border-radius: 50%;
+        padding: 5px;
+        background-color: #f8f9fa;
+        transition: background-color 0.3s;
+      }
+
+      .oauth-icons a:hover {
+        background-color: #dee2e6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-form">
+      <h1 class="text-center mb-4">Signup</h1>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="role">Select Role</label>
+          <select class="form-control" id="role" required>
+            <option value="student">Student</option>
+            <option value="admin">School Admin</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Signup</button>
+      </form>
+      <p class="text-center mt-3">
+        Already have an account? <a href="Login.html">Login</a>
+      </p>
+      <!-- Icons for OAuth 2.0 authentication -->
+      <div class="text-center mt-3 oauth-icons">
+        <a href="#"><i class="fab fa-google"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <!-- Add more icons for other OAuth providers -->
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  </body>
+</html>
