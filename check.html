@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkmeng - Main Page</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Checkmeng</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="Dashboard.html"> Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminPanel.html">Admin Panel</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Check Results</h1>
+      <form>
+        <div class="form-group">
+          <label for="examNumber">Exam Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="examNumber"
+            placeholder="Enter Exam Number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="school">School</label>
+          <select class="form-control" id="school" required>
+            <!-- Schools options will be populated dynamically from JSON -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cardDigit">Card Digit</label>
+          <input
+            type="text"
+            class="form-control"
+            id="cardDigit"
+            placeholder="Enter Card Digit"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Check Result
+        </button>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Fetch schools from JSON file and populate the select options
+      $(document).ready(function () {
+        $.getJSON("schools.json", function (data) {
+          $.each(data, function (index, school) {
+            $("#school").append(
+              $("<option>", {
+                value: school.id,
+                text: school.name,
+              })
+            );
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

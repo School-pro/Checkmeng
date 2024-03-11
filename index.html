@@ -17,6 +17,12 @@
       .featured-schools .card {
         margin-bottom: 20px;
       }
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
     </style>
   </head>
   <body>
@@ -44,10 +50,10 @@
               <a class="nav-link" href="/AdminPanel.html">Admin Panel</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">About Us</a>
+              <a class="nav-link" href="about.html">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact Us</a>
+              <a class="nav-link" href="contact.html">Contact Us</a>
             </li>
           </ul>
         </div>
@@ -92,9 +98,7 @@
         <p class="lead">
           Your one-stop platform for accessing school results securely!
         </p>
-        <a href="#student-dashboard" class="btn btn-primary mr-2"
-          >Check Your Results</a
-        >
+        <a href="check.html" class="btn btn-primary mr-2">Check Your Results</a>
         <a href="Login.html" class="btn btn-secondary">Admin Login</a>
       </div>
     </section>
@@ -156,10 +160,40 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-4 bg-dark text-white">
-      <div class="container text-center">
-        <p>&copy; 2024 Checkmeng. All rights reserved.</p>
+    <footer class="footer bg-dark text-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>About Us</h5>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+              viverra, lorem nec viverra aliquet.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="StudentDashboard.html">Student Dashboard</a></li>
+              <li><a href="AdminPanel.html">Admin Panel</a></li>
+              <li><a href="AboutUs.html">About Us</a></li>
+              <li><a href="ContactUs.html">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </footer>
 
