@@ -99,35 +99,37 @@
     <!-- Footer goes here -->
 
     <!-- <script> -->
-    //   /<!-- Add this script tag to the bottom of your HTML body -->
-<script>
-    // JavaScript code to parse dashboard content to a PDF document
-    function downloadResult() {
+    // /<!-- Add this script tag to the bottom of your HTML body -->
+    <script>
+      // JavaScript code to parse dashboard content to a PDF document
+      function downloadResult() {
         // Get the recent result content
-        var resultContent = document.querySelector('.result-doc .card-body').innerHTML;
+        var resultContent = document.querySelector(
+          ".result-doc .card-body"
+        ).innerHTML;
 
         // Define the document definition
         var docDefinition = {
-            content: [
-                { text: 'Recent Result', style: 'header' },
-                { text: resultContent, margin: [0, 20] }
-            ],
-            styles: {
-                header: {
-                    fontSize: 18,
-                    bold: true,
-                    alignment: 'center',
-                    margin: [0, 0, 0, 20]
-                }
-            }
+          content: [
+            { text: "Recent Result", style: "header" },
+            { text: resultContent, margin: [0, 20] },
+          ],
+          styles: {
+            header: {
+              fontSize: 18,
+              bold: true,
+              alignment: "center",
+              margin: [0, 0, 0, 20],
+            },
+          },
         };
 
         // Generate PDF document
-        pdfmake.createPdf(docDefinition).download('recent_result.pdf');
-    }
-</script>
-
+        pdfmake.createPdf(docDefinition).download("recent_result.pdf");
+      }
     </script>
+
+    <!-- </script> -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
