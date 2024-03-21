@@ -3,15 +3,15 @@ const express = require("express");
 const router = express.Router();
 
 // Import controllers
-const superadminController = require("./controllers/superadminController");
-const schoolAdminController = require("./controllers/schoolAdminController");
-const studentController = require("./controllers/studentController");
-const classController = require("./controllers/classController");
-const armController = require("./controllers/armController");
-const schoolController = require("./controllers/schoolController");
-const resultController = require("./controllers/resultController");
-const teacherController = require("./controllers/teacherController");
-const settingController = require("./controllers/settingController");
+const superadminController = require("../controllers/users/superAdminController");
+const schoolAdminController = require("../controllers/users/schoolAdminController");
+const studentController = require("../controllers/users/studentController");
+const classController = require("../controllers/classController");
+const armController = require("../controllers/armController");
+const schoolController = require("../controllers/schoolController");
+const resultController = require("../controllers/resultController");
+const teacherController = require("../controllers/teacherController");
+const settingController = require("../controllers/settingController");
 
 // Routes for Superadmin
 router.post("/superadmins", superadminController.createSuperadmin);

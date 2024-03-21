@@ -11,6 +11,6 @@ const armSchema = new mongoose.Schema({
   // Add additional fields as needed
 });
 
-const Arm = mongoose.model("Arm", armSchema);
+const Arm = mongoose.models.Arm || mongoose.model("Arm", armSchema);
 
 module.exports = Arm;

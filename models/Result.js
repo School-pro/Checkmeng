@@ -15,6 +15,6 @@ const resultSchema = new mongoose.Schema({
   // Add additional fields such as attendance, test scores, etc.
 });
 
-const Result = mongoose.model("Result", resultSchema);
+const Result = mongoose.models.Result || mongoose.model("Result", resultSchema);
 
 module.exports = Result;

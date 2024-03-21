@@ -1,14 +1,10 @@
 // Import necessary models
-const Superadmin = require("../models/superadminModel");
-const SchoolAdmin = require("../models/schoolAdminModel");
-const Student = require("../models/studentModel");
-const Class = require("../models/classModel");
-const Arm = require("../models/armModel");
-const School = require("../models/schoolModel");
-const Result = require("../models/resultModel");
-
-// superadminController.js
-const Superadmin = require("../models/superadminModel");
+const Superadmin = require("../../models/users/SuperAdmin");
+const Student = require("../../models/users/Student");
+const Class = require("../../models/Class");
+const Arm = require("../../models/Arm");
+const School = require("../../models/School");
+const Result = require("../../models/Result");
 
 // Create a new superadmin
 exports.createSuperadmin = async (req, res) => {
@@ -136,17 +132,45 @@ exports.getAllStudents = async (req, res) => {
 
 // Add other Student controller methods as needed
 
-// SchoolAdmin-specific Controller Methods
+// SuperAdmin controller for creating of classes
 exports.createClass = async (req, res) => {
-  // Controller logic for creating class
+  try {
+    // Controller logic for creating class
+    const createdClass = await Class.create(req.body);
+    res
+      .status(201)
+      .json({ message: "Class created successfully", createdClass });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 exports.createArm = async (req, res) => {
   // Controller logic for creating arm
 };
 
+// ##############################################
+// ############## FOR SCHOOL ####################
+// ##############################################
+
 exports.createSchool = async (req, res) => {
   // Controller logic for creating school
+  try {
+    const school = await School.create(req.body);
+    res.status(201).json({ message: "School created successfully", school });
+  } catch (error) {
+    res.status(500).json({ error: "unable to fetch data" });
+  }
+};
+
+exports.getAllSchools = async (req, res) => {
+  // Controller logic for getting all schools
+  try {
+    const school = School.find();
+    res.status(201).json(school);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.inputStudentData = async (req, res) => {

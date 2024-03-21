@@ -1,5 +1,5 @@
 // armController.js
-const Arm = require("../models/arm");
+const Arm = require("../models/Arm");
 
 // Create a new arm
 exports.createArm = async (req, res) => {

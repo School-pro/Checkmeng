@@ -1,19 +1,16 @@
 // Import necessary models
-const SchoolAdmin = require("../models/schoolAdminModel");
-const Class = require("../models/classModel");
-const Arm = require("../models/armModel");
-const School = require("../models/schoolModel");
-const Student = require("../models/studentModel");
-const Result = require("../models/resultModel");
-
-// schoolAdminController.js
-const SchoolAdmin = require("../models/schoolAdminModel");
+const SchoolAdmin = require("../../models/users/SchoolAdmin");
+const Class = require("../../models/Class");
+const Arm = require("../../models/Arm");
+const School = require("../../models/School");
+const Student = require("../../models/users/Student");
+const Result = require("../../models/Result");
 
 // Create a new school admin
-exports.createSchoolAdmin = async (req, res) => {
+exports.createSchool = async (req, res) => {
   try {
-    const schoolAdmin = await SchoolAdmin.create(req.body);
-    res.status(201).json(schoolAdmin);
+    const school = await School.create(req.body);
+    res.status(201).json(school);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -23,6 +20,16 @@ exports.createSchoolAdmin = async (req, res) => {
 exports.getAllSchoolAdmins = async (req, res) => {
   try {
     const schoolAdmins = await SchoolAdmin.find();
+    res.status(200).json(schoolAdmins);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Crete school admin
+exports.createSchoolAdmin = async (req, res) => {
+  try {
+    const schoolAdmins = await SchoolAdmin.create(req.body);
     res.status(200).json(schoolAdmins);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -87,16 +94,6 @@ exports.createArm = async (req, res) => {
   try {
     const arm = await Arm.create(req.body);
     res.status(201).json(arm);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Create a new school
-exports.createSchool = async (req, res) => {
-  try {
-    const school = await School.create(req.body);
-    res.status(201).json(school);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
