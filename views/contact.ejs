@@ -8,6 +8,7 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- <link href="styles/nav.css" rel="stylesheet" /> -->
     <style>
       body {
         padding-top: 56px; /* Offset for fixed navbar */
@@ -20,41 +21,8 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Checkmeng</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Dashboard.html">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="AdminPanel.html">Admin Panel</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">About Us</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="ContactUs.html">Contact Us</a>
-            </li> -->
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <%- include('partials/nav') %>
+    <!-- Navigation -->
 
     <div class="container">
       <h1>Contact Us</h1>
@@ -67,6 +35,10 @@
         <li>Address: 123 Main Street, City, Country</li>
       </ul>
     </div>
+
+    <!-- footer -->
+    <%- include('partials/footer') %>
+    <!-- footer -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

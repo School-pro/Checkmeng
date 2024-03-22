@@ -1,0 +1,35 @@
+/* CSS to make the footer stick to the bottom of the page */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333; /* Change the background color as needed */
+  color: #fff; /* Change the text color as needed */
+}
+
+/* Optional: Add padding to the footer */
+.footer .container {
+  padding: 20px;
+}
+
+/* Optional: Style the footer links */
+.footer a {
+  color: #fff; /* Change the link color as needed */
+}
+
+/* Optional: Style the footer links on hover */
+.footer a:hover {
+  text-decoration: none;
+  color: #fff; /* Change the link color on hover as needed */
+}
+
+/* Media query for smaller screens (e.g., mobile devices) */
+@media (max-width: 768px) {
+  /* Adjust footer layout for smaller screens */
+  .footer .container {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  /* Optionally, adjust font sizes, margins, etc. for smaller screens */
+}

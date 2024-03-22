@@ -1,0 +1,13 @@
+.carousel-item img {
+  height: 400px;
+  object-fit: cover;
+}
+.featured-schools .card {
+  margin-bottom: 20px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

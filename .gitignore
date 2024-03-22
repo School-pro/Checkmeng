@@ -3,3 +3,4 @@ package-lock.json
 newdash.html
 school.js
 schools.json
+.env

@@ -1,0 +1,11 @@
+This is the way of 
+creating a jwt token
+
+###### STEPS ######
+1.  Enter the command `node` 
+    in the command line
+
+2. require the crypto module by using the following command
+    `require('crypto').randomBytes(64).toString('hex')`
+
+3.  Press enter and copy the generated syntax

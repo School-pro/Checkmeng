@@ -1,0 +1,30 @@
+.hero {
+  /* background-image: url("./web_dev.jpg"); */
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+  background-color: teal;
+  padding: 100px 0;
+}
+.btn-update {
+  margin-bottom: 20px;
+}
+.course-score {
+  margin-bottom: 20px;
+}
+.profile-pic {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+.result-doc {
+  margin-top: 20px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

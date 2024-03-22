@@ -1,4 +1,3 @@
-// Example code for creating classes and arms
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -7,22 +6,35 @@ const ejs = require("ejs");
 const userRoutes = require("./routes/userRoutes");
 // const otherRoutes = require("./routes/otherRoutes");
 const navigationRoutes = require("./routes/navRoutes");
+const session = require("express-session");
+const authRoutes = require("./routes/auth/authRoutes");
 const app = express();
+const ACCESS = process.env.ACCESS_TOKEN;
+require("dotenv").config();
+
+// Use session middleware
+
+app.use(
+  session({
+    secret: ACCESS,
+    // "e0b0177a29ba253a8e9dd2c622f1e5858a5ae155d11fe70dc1620c810682f8b8514587fa67f546ef30c0cc8f7ec3278c6db03420ac6fb2809978aad83101ce82", // Replace with your secret key
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/api", userRoutes);
-// app.use("/api", otherRoutes);
 app.use("/", navigationRoutes);
+app.use("/api", userRoutes);
+app.use("/auth", authRoutes);
+// app.use("/api", otherRoutes);
 
 // Serve static files from the "public" directory
 app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
 // Database connection
 mongoose.connect("mongodb://localhost:27017/checkmeng", {
   // useNewUrlParser: true,
