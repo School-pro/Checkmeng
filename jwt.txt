@@ -9,3 +9,6 @@ creating a jwt token
     `require('crypto').randomBytes(64).toString('hex')`
 
 3.  Press enter and copy the generated syntax
+
+
+//   "e0b0177a29ba253a8e9dd2c622f1e5858a5ae155d11fe70dc1620c810682f8b8514587fa67f546ef30c0cc8f7ec3278c6db03420ac6fb2809978aad83101ce82",

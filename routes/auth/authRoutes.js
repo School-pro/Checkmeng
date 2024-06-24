@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 
-const schoolAdminAuth = require("../../controllers/auth/schoolAdminAuth");
+const schoolAdminAuth = require("../../controllers/sch-Admin/schoolAdminAuth");
 
 // Authentication route for the school admin
 router.post("/admin-register", schoolAdminAuth.registerSchoolAdmin);

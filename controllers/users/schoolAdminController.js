@@ -1,10 +1,10 @@
 // Import necessary models
 const SchoolAdmin = require("../../models/users/SchoolAdmin");
-const Class = require("../../models/Class");
-const Arm = require("../../models/Arm");
-const School = require("../../models/School");
-const Student = require("../../models/users/Student");
-const Result = require("../../models/Result");
+const Class = require("../../models/users/students/Class");
+const Arm = require("../../models/users/students/Arm");
+const School = require("../../models/users/students/School");
+const Student = require("../../models/users/students/Student");
+const Result = require("../../models/results/Result");
 
 // Create a new school admin
 exports.createSchool = async (req, res) => {

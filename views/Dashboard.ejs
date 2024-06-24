@@ -28,7 +28,10 @@
           alt="Profile Picture"
           class="profile-pic"
         />
-        <h3>John Doe</h3>
+        <% user.map((user,key)=>{
+        <h3 key="{key}"><%= user.username%></h3>
+
+        }) %>
         <!-- Replace with student's name -->
       </div>
     </section>

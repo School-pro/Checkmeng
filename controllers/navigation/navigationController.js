@@ -3,40 +3,56 @@ const router = express.Router();
 
 // landing page
 exports.home = (req, res) => {
-  res.render("index");
+  const user = req.user;
+
+  res.render("index", { user });
 };
 
 // student dashboard page
 exports.dashboard = (req, res) => {
-  res.render("dashboard");
+  const user = req.user;
+
+  res.render("dashboard", { user });
 };
 
 // school admin page
 exports.adminpanel = (req, res) => {
-  res.render("adminPanel");
+  const user = req.user;
+
+  res.render("adminPanel", { user });
 };
 
 // contact us page
 exports.contact = (req, res) => {
-  res.render("contact");
+  const user = req.user;
+
+  res.render("contact", { user });
 };
 
 // register form
 exports.register = (req, res) => {
-  res.render("register");
+  const user = req.user;
+
+  res.render("register", { user });
 };
 
 // login page/ form
 exports.login = (req, res) => {
-  res.render("login");
+  const user = req.user;
+
+  res.render("login", { user });
 };
 
 // result checker page
 exports.resultCheck = (req, res) => {
-  res.render("check");
+  const user = req.user;
+
+  res.render("check", { user });
 };
 
 // result checker page
 exports.about = (req, res) => {
-  res.render("about");
+  const user = req.user;
+
+  res.render("about", { user });
 };

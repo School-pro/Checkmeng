@@ -1,6 +1,6 @@
 // Import necessary models
-const Student = require("../../models/users/Student");
-const Result = require("../../models/Result");
+const Student = require("../../models/users/students/Student");
+const Result = require("../../models/results/Result");
 
 // Student Controller
 exports.createStudent = async (req, res) => {

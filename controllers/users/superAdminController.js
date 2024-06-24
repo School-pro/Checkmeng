@@ -1,10 +1,10 @@
 // Import necessary models
 const Superadmin = require("../../models/users/SuperAdmin");
-const Student = require("../../models/users/Student");
-const Class = require("../../models/Class");
-const Arm = require("../../models/Arm");
-const School = require("../../models/School");
-const Result = require("../../models/Result");
+const Student = require("../../models/users/students/Student");
+const Class = require("../../models/users/students/Class");
+const Arm = require("../../models/users/students/Arm");
+const School = require("../../models/users/students/School");
+const Result = require("../../models/results/Result");
 
 // Create a new superadmin
 exports.createSuperadmin = async (req, res) => {
