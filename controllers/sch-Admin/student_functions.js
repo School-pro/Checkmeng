@@ -1,105 +1,50 @@
 // 1. Create an account for a school
 
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
 require("dotenv").config();
-// const Student = require("../../models/users/students/Student");
-
-// const School = require("../../models/users/students/School");
-// const Class = require("../../models/users/students/Class");
-// const Arm = require("../../models/users/students/Arm");
-// exports.createStudent = async (req, res) => {
-//   const {
-//     studentId,
-//     firstname,
-//     othername,
-//     lastname,
-//     schoolId,
-//     classId,
-//     classArmId,
-//     grade,
-//     position,
-//     profilePicture,
-//     dateOfBirth,
-//     address,
-//   } = req.body;
-
-//   try {
-//     // find the school by ID
-//     const school = await School.findById(schoolId);
-//     if (!school) {
-//       return res.status(404).json({ message: "School not found" });
-//     }
-//     // Validate request body
-//     if (!firstname || !lastname || !address || !dateOfBirth) {
-//       return res.status(400).json({ message: "All fields are required" });
-//     }
-
-//     // Check if student name already exists
-//     const existingStudent =
-//       (await Student.findOne({ firstname })) && Student.findOne({ lastname });
-
-//     if (existingStudent) {
-//       return res.status(400).json({ message: "Pupil already exists" });
-//     }
-
-//     // let the relational tables have their own definitions
-
-//     // 1. school = relates to school table
-//     // 2. classId = refers to class table
-//     // 3. classArmId = refers to classArm table
-
-//     // Validate references
-//     // const school = await School.findById(schoolId);
-//     // if (!school) return res.status(400).send({ message: "Invalid schoolId" });
-
-//     const classObj = await Class.findById(classId);
-//     if (!classObj) return res.status(400).send({ message: "Invalid classId" });
-
-//     const arm = await Arm.findById(classArmId);
-//     if (!arm) return res.status(400).send({ message: "Invalid classArmId" });
-
-//     // Create new student
-//     const newStudent = new Student({
-//       studentId: Reg_No,
-//       firstname,
-//       othername,
-//       lastname,
-//       schoolId,
-//       classId,
-//       classArmId,
-//       grade,
-//       position,
-//       profilePicture,
-//       dateOfBirth,
-//       address,
-//     });
-
-//     // Save student to database
-//     await newStudent.save();
-
-//     // res.status(201).send(student);
-//     res.status(201).json({ message: "Stidemt", student: newStudent });
-//   } catch (error) {
-//     res.status(500).send({ message: "Error creating student", error });
-//   }
-// };
-
 // studentController.js
 const Student = require("../../models/users/students/Student");
 const Class = require("../../models/users/students/Class");
 const Arm = require("../..//models/users/students/Arm");
 const School = require("../../models/users/students/School");
+const { validationResult } = require("express-validator"); // Example validation library
+const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
 
 // Controller to register a student
+
+// Helper function to create or find an arm
+async function createOrUpdateArm(classId, schoolId, classArm) {
+  // Check for duplicate arms
+  let arm = await Arm.findOne({ classId, schoolId, name: classArm });
+  if (arm) {
+    // If an arm with the same name already exists, return the existing arm
+    return arm;
+  } else {
+    // Otherwise, create a new arm
+    arm = new Arm({
+      name: classArm,
+      classId,
+      schoolId,
+    });
+    await arm.save();
+    return arm;
+  }
+}
+
 exports.createStudent = async (req, res) => {
   try {
+    // Validate request body using a validation library
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const {
       firstname,
       othername,
       lastname,
       schoolId,
       classId,
+      classArm,
       classArmId,
       profilePicture,
       dateOfBirth,
@@ -120,24 +65,22 @@ exports.createStudent = async (req, res) => {
       });
     }
 
-    // Validate arm
-    const arm = await Arm.findById(classArmId);
-    if (
-      !arm ||
-      arm.classId.toString() !== classId ||
-      arm.schoolId.toString() !== schoolId
-    ) {
-      return res.status(400).json({
-        message: "Invalid arm ID or arm does not belong to the class/school",
-      });
+    // Create or find arms and store their IDs
+    const classArmIds = [];
+    for (const armName of classArm) {
+      const arm = await createOrUpdateArm(classId, schoolId, classArm);
+      classArmIds.push(arm._id);
     }
 
     // Generate the registration number
-    const schoolShortName = school.name.substring(0, 5).toUpperCase();
-    const registrationYear = new Date().getFullYear();
-    const Reg_No = `${schoolShortName}${registrationYear}${Math.floor(
-      1000 + Math.random() * 9000
-    )}`;
+    // const schoolShortName = school.name.substring(0, 5).toUpperCase();
+    // const registrationYear = new Date().getFullYear();
+    // const Reg_No = `${schoolShortName}${registrationYear}${Math.floor(
+    //   1000 + Math.random() * 9000
+    // )}`;
+
+    // Generate a unique registration number (e.g., using a UUID library)
+    const Reg_No = uuidv4();
 
     // Create student
     const student = new Student({
@@ -147,13 +90,19 @@ exports.createStudent = async (req, res) => {
       lastname,
       schoolId,
       classId,
-      classArmId,
-      profilePicture,
+      classArm,
+      classArmId: classArmIds, // Store arm IDs in an array,      profilePicture,
       dateOfBirth,
       address,
     });
 
     await student.save();
+
+    if (!classObj.arms.includes(classArm._id)) {
+      classObj.arms.push(classArm._id);
+      await classObj.save(); // Update the Class document
+    }
+
     res.status(201).json(student);
   } catch (error) {
     res.status(500).json({ message: error.message });

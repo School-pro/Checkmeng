@@ -59,25 +59,6 @@ exports.registerSchoolAdmin = async (req, res) => {
 
     const savedSchool = await newSchool.save();
 
-    // // Create classes
-    // const classIds = [];
-    // for (const classData of classes) {
-    //   const newClass = new Class({
-    //     className: classData.className,
-    //     schoolId: savedSchool._id,
-    //   });
-
-    //   const savedClass = await newClass.save();
-    //   classIds.push(savedClass._id);
-    // }
-
-    // // Update school with class references
-    // savedSchool.classes = classIds;
-    // await savedSchool.save();
-
-    // // Save the new admin
-    // await newAdmin.save();
-
     // Create classes
     const classIds = [];
     for (const classData of classes) {

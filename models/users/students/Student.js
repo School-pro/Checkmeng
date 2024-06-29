@@ -13,14 +13,14 @@ const studentSchema = new mongoose.Schema({
     // "_id": "6676e1df3c605bae218cae71",required: true,
   },
   classId: {
-    type: mongoose.Schema.Types.Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Class",
     // required: true,
   },
+  classArm: { type: String, required: true },
   classArmId: {
-    type: mongoose.Schema.Types.Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Arm",
-    // required: true,
   },
   profilePicture: [
     { type: String },

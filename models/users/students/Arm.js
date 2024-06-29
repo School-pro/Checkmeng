@@ -2,19 +2,6 @@
 const mongoose = require("mongoose");
 
 const armSchema = new mongoose.Schema({
-  // _id: Number,
-  // name: { type: String, required: true },
-  // classId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "Class",
-  //   required: true,
-  // },
-  // SchoolId: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: "School",
-  //   required: true,
-  // },
-
   name: { type: String, required: true },
   classId: {
     type: mongoose.Schema.Types.ObjectId,

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const schoolAdminSchema = new mongoose.Schema({
   username: { type: String, required: true },
   school: { type: String, required: true },
-  role: ["admin", "teacher", { default: "Admin" }],
+  role: ["Admin", "teacher", { default: "Admin" }],
   email: { type: String, required: true },
   password: { type: String, required: true },
   schoolAddress: { type: String, required: true },

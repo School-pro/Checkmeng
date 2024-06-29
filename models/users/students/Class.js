@@ -8,7 +8,8 @@ const classSchema = new mongoose.Schema({
     ref: "School",
     required: true,
   },
-  arms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Arm" }],
+  arms: [],
+  // arms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Arm" }],
   // Add additional fields as needed
   //   optional section for the Arm of the classes
 });
