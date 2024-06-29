@@ -16,10 +16,10 @@ router.get("/", schoolAdminController.getAllSchoolAdmins);
 
 // Other functionalities by the School Administrator
 router.post("/reg-pupil", schoolAdminStudentFunction.createStudent);
-router.put("/:id", schoolAdminStudentFunction.updateStudentById);
-router.delete("/:id", schoolAdminStudentFunction.deleteStudentById);
-router.get("/:id", schoolAdminStudentFunction.findStudentById);
-router.get("/", schoolAdminStudentFunction.getAllStudents);
+// router.put("/:id", schoolAdminStudentFunction.updateStudentById);
+// router.delete("/:id", schoolAdminStudentFunction.deleteStudentById);
+// router.get("/:id", schoolAdminStudentFunction.findStudentById);
+// router.get("/", schoolAdminStudentFunction.getAllStudents);
 
 //Other
 // router.post("/students", schoolAdminController.inputStudentData);

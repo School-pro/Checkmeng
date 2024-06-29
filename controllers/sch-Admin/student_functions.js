@@ -86,13 +86,13 @@ require("dotenv").config();
 // };
 
 // studentController.js
-const Student = require("../models/studentModel");
-const Class = require("../models/classModel");
-const Arm = require("../models/armModel");
-const School = require("../models/schoolModel");
+const Student = require("../../models/users/students/Student");
+const Class = require("../../models/users/students/Class");
+const Arm = require("../..//models/users/students/Arm");
+const School = require("../../models/users/students/School");
 
 // Controller to register a student
-exports.registerStudent = async (req, res) => {
+exports.createStudent = async (req, res) => {
   try {
     const {
       firstname,
@@ -159,7 +159,6 @@ exports.registerStudent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // // // School Admin retreiving all students
 // exports.getAllStudents = async (req, res) => {

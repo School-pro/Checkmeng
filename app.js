@@ -16,7 +16,7 @@ const PORT_NO = process.env.PORT || 4500;
 const adminRoutes = require("./routes/schoolAdmin/schoolAdminRoutes");
 // const navigationRoutes = require("./routes/navRoutes");
 // const authRoutes = require("./routes/auth/authRoutes");
-const userRoutes = require("./routes/userRoutes");
+// const userRoutes = require("./routes/userRoutes");
 
 // Use session middleware
 app.use(
