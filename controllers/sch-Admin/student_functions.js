@@ -6,9 +6,11 @@ const Student = require("../../models/users/students/Student");
 const Class = require("../../models/users/students/Class");
 const Arm = require("../..//models/users/students/Arm");
 const School = require("../../models/users/students/School");
+const SchoolAdmin = require("../../models/users/SchoolAdmin");
 const { validationResult } = require("express-validator"); // Example validation library
+// const { authMiddleware } = require("../../middleware/authMiddleware");
 const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
-
+const mongoose = require("mongoose");
 // Controller to register a student
 
 // Helper function to create or find an arm
@@ -73,14 +75,17 @@ exports.createStudent = async (req, res) => {
     }
 
     // Generate the registration number
-    // const schoolShortName = school.name.substring(0, 5).toUpperCase();
-    // const registrationYear = new Date().getFullYear();
-    // const Reg_No = `${schoolShortName}${registrationYear}${Math.floor(
-    //   1000 + Math.random() * 9000
-    // )}`;
+    const schoolShortName = school.name.substring(0, 5).toUpperCase();
+    const registrationYear = new Date().getFullYear();
+
+    const Reg_No = `${schoolShortName}${registrationYear}${Math.floor(
+      1000 + Math.random() * 9000
+    )})`;
+
+    // const Reg_No = `${schoolShortName}${registrationYear}${classAndArm}`;
 
     // Generate a unique registration number (e.g., using a UUID library)
-    const Reg_No = uuidv4();
+    // const Reg_No = uuidv4();
 
     // Create student
     const student = new Student({
@@ -109,15 +114,51 @@ exports.createStudent = async (req, res) => {
   }
 };
 
-// // // School Admin retreiving all students
-// exports.getAllStudents = async (req, res) => {
-//   try {
-//     const students = await Student.find();
-//     res.status(200).json(students);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
+//##############################################
+//############### STILL ON THIS SPOT ###########
+//##############################################
+
+// // School Admin retreiving all students
+exports.getAllStudentInASchool = async (req, res) => {
+  try {
+    const adminId = req.user; // Authenticated admin's ID from the authMiddleware
+
+    console.log("Authenticated Admin ID:", adminId);
+
+    // Validate adminId
+    if (!mongoose.Types.ObjectId.isValid(adminId)) {
+      return res.status(400).json({ message: "Invalid admin ID." });
+    }
+
+    // Find the admin and populate the school reference
+    const admin = await SchoolAdmin.findById(adminId).populate("school");
+
+    console.log("Admin Document:", admin);
+
+    if (!admin) {
+      return res.status(401).json({ message: "Admin not found." });
+    }
+
+    // Ensure school is populated
+    if (!admin.school) {
+      return res.status(400).json({ message: "School not found for admin." });
+    }
+
+    // Extract the school ID from the admin's document
+    const schoolId = admin.school._id;
+
+    console.log("School ID:", schoolId);
+
+    // Find all students belonging to the admin's school
+    const students = await Student.find({ schoolId });
+
+    console.log("Students Found:", students);
+
+    res.status(200).json(students);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // // Find a student by their _id
 // exports.findStudentById = async (req, res) => {

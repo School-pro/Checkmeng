@@ -8,10 +8,15 @@ const classSchema = new mongoose.Schema({
     ref: "School",
     required: true,
   },
-  arms: [],
-  // arms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Arm" }],
-  // Add additional fields as needed
-  //   optional section for the Arm of the classes
+
+  schoolId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "School",
+    required: true,
+  },
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+  arms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Arm" }],
+  // arms: [],
 });
 
 // classSchema.plugin(AutoIncrement, { inc_field: "customId" });

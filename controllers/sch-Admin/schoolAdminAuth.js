@@ -8,7 +8,6 @@ const School = require("../../models/users/students/School");
 
 // const School = require("../../models/users/students/School");
 const Class = require("../../models/users/students/Class");
-const Arm = require("../../models/users/students/Arm");
 
 exports.registerSchoolAdmin = async (req, res) => {
   try {
@@ -125,10 +124,11 @@ exports.loginSchoolAdmin = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const user = req.user;
     // Store token in session
     req.session.token = token;
-    res.status(200).json({ Toke: token });
+    // Store token in session
+    req.session.token = token;
+    res.status(200).json({ Token: token });
     // res.status(200).json({ token });
     // res.render("dashboard", { user });
   } catch (error) {

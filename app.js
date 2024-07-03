@@ -14,7 +14,7 @@ const PORT_NO = process.env.PORT || 4500;
 
 // Routes
 const adminRoutes = require("./routes/schoolAdmin/schoolAdminRoutes");
-// const navigationRoutes = require("./routes/navRoutes");
+const navigationRoutes = require("./routes/navRoutes");
 // const authRoutes = require("./routes/auth/authRoutes");
 // const userRoutes = require("./routes/userRoutes");
 
@@ -35,8 +35,8 @@ app.use(express.json());
 // Navigations
 
 app.use("/api/admin", adminRoutes);
-// app.use("/", navigationRoutes);
-// app.use("/api", userRoutes);
+app.use("/", navigationRoutes);
+// app.use("/api", adminRoutes);
 // app.use("/auth", authRoutes);
 // app.use("/api", otherRoutes);
 

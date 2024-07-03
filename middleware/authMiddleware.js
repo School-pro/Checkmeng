@@ -1,35 +1,34 @@
-// // authMiddleware.js
-
-// const authenticateUser = (req, res, next) => {
-//   // Implement user authentication logic here
-//   // Verify user credentials, manage sessions, etc.
-//   // For example, check if the user is logged in
-//   if (req.session.user) {
-//     next(); // User is authenticated, proceed to the next middleware or route handler
-//   } else {
-//     res.status(401).json({ message: "Unauthorized" }); // User is not authenticated, send 401 Unauthorized response
-//   }
-// };
-
-// module.exports = { authenticateUser };
-
-// authMiddleware.js
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const SchoolAdmin = require("../models/users/SchoolAdmin");
+const mongoose = require("mongoose");
 
-const authenticateUser = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: decoded.userId });
-    if (!user) {
-      throw new Error("User not found");
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN);
+    const adminId = decoded.userId;
+
+    // Validate adminId
+    if (!adminId || !mongoose.Types.ObjectId.isValid(adminId)) {
+      return res.status(400).json({ message: "Invalid admin ID" });
     }
-    req.user = user;
+
+    // Check if admin exists in the database
+    const admin = await SchoolAdmin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    req.user = adminId; // Attach admin ID to request object
     next();
   } catch (error) {
-    res.status(401).json({ message: "Authentication failed" });
+    console.error(`Authentication error: ${error.message}`);
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
 
-module.exports = { authenticateUser };
+module.exports = authMiddleware;

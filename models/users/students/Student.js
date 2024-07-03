@@ -10,7 +10,6 @@ const studentSchema = new mongoose.Schema({
   schoolId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "School",
-    // "_id": "6676e1df3c605bae218cae71",required: true,
   },
   classId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -18,10 +17,7 @@ const studentSchema = new mongoose.Schema({
     // required: true,
   },
   classArm: { type: String, required: true },
-  classArmId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Arm",
-  },
+  classArmId: { type: mongoose.Schema.Types.ObjectId, ref: "Arm" }, // Array of ObjectIds,
   profilePicture: [
     { type: String },
     { value: "http://pictures.com/images/" },
@@ -29,7 +25,7 @@ const studentSchema = new mongoose.Schema({
   ],
   dateOfBirth: { type: Date, default: Date.now() },
   address: { type: String, required: true, default: "" },
-
+  subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
   // Add additional fields as needed
 });
 

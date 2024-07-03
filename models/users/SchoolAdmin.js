@@ -5,6 +5,11 @@ const mongoose = require("mongoose");
 const schoolAdminSchema = new mongoose.Schema({
   username: { type: String, required: true },
   school: { type: String, required: true },
+  // school: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "School",
+  //   required: true,
+  // },
   role: ["Admin", "teacher", { default: "Admin" }],
   email: { type: String, required: true },
   password: { type: String, required: true },
@@ -13,6 +18,8 @@ const schoolAdminSchema = new mongoose.Schema({
 
 // schoolAdminSchema.plugin(AutoIncrement, { inc_field: "customId" });
 
-const SchoolAdmin = mongoose.model("SchoolAdmin", schoolAdminSchema);
+const SchoolAdmin =
+  mongoose.models.SchoolAdmin ||
+  mongoose.model("SchoolAdmin", schoolAdminSchema);
 
 module.exports = SchoolAdmin;

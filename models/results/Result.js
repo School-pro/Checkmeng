@@ -14,7 +14,7 @@ const resultSchema = new mongoose.Schema({
   },
   grade: ["A", "B", "C", "D", "E", "F", { default: "" }],
   position: ["1st", "2nd", { default: "" }],
-  
+
   // Add additional fields such as attendance, test scores, etc.
 });
 
