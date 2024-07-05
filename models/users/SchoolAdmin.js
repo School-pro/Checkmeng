@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 
 const schoolAdminSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  school: { type: String, required: true },
-  // school: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "School",
-  //   required: true,
-  // },
-  role: ["Admin", "teacher", { default: "Admin" }],
+  // school: { type: String, required: true },
+  school: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "School",
+    required: true,
+  },
+  role: { type: String, enum: ["Admin", "Teacher"], default: "Admin" },
   email: { type: String, required: true },
   password: { type: String, required: true },
   schoolAddress: { type: String, required: true },

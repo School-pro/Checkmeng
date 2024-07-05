@@ -40,15 +40,6 @@ exports.registerSchoolAdmin = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new school admin
-    const newAdmin = new SchoolAdmin({
-      username,
-      email,
-      password: hashedPassword,
-      school,
-      schoolAddress,
-    });
-
     // Create and save the school
     const newSchool = new School({
       name: school,
@@ -73,6 +64,15 @@ exports.registerSchoolAdmin = async (req, res) => {
     // Update school with class references
     savedSchool.classes = classIds;
     await savedSchool.save();
+
+    // Create new school admin
+    const newAdmin = new SchoolAdmin({
+      username,
+      email,
+      password: hashedPassword,
+      school: savedSchool._id, // Store the ObjectId reference to the school
+      schoolAddress,
+    });
 
     // Save the new admin
     await newAdmin.save();
