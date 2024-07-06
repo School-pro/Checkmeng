@@ -80,7 +80,7 @@ exports.createStudent = async (req, res) => {
 
     const Reg_No = `${schoolShortName}${registrationYear}${Math.floor(
       1000 + Math.random() * 9000
-    )})`;
+    )}`;
 
     // const Reg_No = `${schoolShortName}${registrationYear}${classAndArm}`;
 
@@ -114,11 +114,7 @@ exports.createStudent = async (req, res) => {
   }
 };
 
-//##############################################
-//############### STILL ON THIS SPOT ###########
-//##############################################
-
-// // School Admin retreiving all students
+// GET ALL THE STUDENT UNDER A PARTICULAR SCHOOL ADMIN
 exports.getAllStudentInASchool = async (req, res) => {
   try {
     const adminId = req.user; // Authenticated admin's ID from the authMiddleware
@@ -160,52 +156,112 @@ exports.getAllStudentInASchool = async (req, res) => {
   }
 };
 
-// // Find a student by their _id
-// exports.findStudentById = async (req, res) => {
-//   const { id } = req.params; // Assuming the id is passed as a URL parameter
+// FIND A STUDENT BY THE ID
+exports.findStudentById = async (req, res) => {
+  const { id } = req.params; // Assuming the id is passed as a URL parameter
+  const adminId = req.user; // Authenticated admin's ID from the authMiddleware
 
-//   try {
-//     const student = await Student.findById(id);
-//     if (!student) {
-//       return res.status(404).json({ message: "Student not found" });
-//     }
-//     res.status(200).json(student);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-// // Update a student by their _id
-// exports.updateStudentById = async (req, res) => {
-//   const { id } = req.params; // Assuming the id is passed as a URL parameter
-//   const updateData = req.body; // Assuming the update data is passed in the request body
+  try {
+    //  Check if the id is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid student ID." });
+    }
 
-//   try {
-//     const updatedStudent = await Student.findByIdAndUpdate(id, updateData, {
-//       new: true,
-//     });
-//     if (!updatedStudent) {
-//       return res.status(404).json({ message: "Student not found" });
-//     }
-//     res.status(200).json(updatedStudent);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+    // check if the admin is existing
+    const admin = await SchoolAdmin.findById(adminId).populate("school");
+    if (!admin) {
+      return res.status(401).json({ message: "Admin not found." });
+    }
 
-// // Delete a student by their _id
-// exports.deleteStudentById = async (req, res) => {
-//   const { id } = req.params; // Assuming the id is passed as a URL parameter
+    // check if the admin has a school attached to it
+    if (!admin.school) {
+      return res.status(400).json({ message: "School not found for admin." });
+    }
 
-//   try {
-//     const deletedStudent = await Student.findByIdAndDelete(id);
-//     if (!deletedStudent) {
-//       return res.status(404).json({ message: "Student not found" });
-//     }
-//     res.status(200).json({ message: "Student deleted successfully" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+    const schoolId = admin.school._id;
+
+    const student = await Student.findOne({ _id: id, schoolId });
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json(student);
+  } catch (error) {
+    console.error("Error finding student:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// UPDATE A STUDENT BY THE ID
+exports.updateStudentById = async (req, res) => {
+  const { id } = req.params; // Assuming the id is passed as a URL parameter
+  const adminId = req.user; // Authenticated admin's ID from the authMiddleware
+  const updateData = req.body; // Assuming the update data is passed in the request body
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid student ID." });
+    }
+
+    const admin = await SchoolAdmin.findById(adminId).populate("school");
+    if (!admin) {
+      return res.status(401).json({ message: "Admin not found." });
+    }
+
+    if (!admin.school) {
+      return res.status(400).json({ message: "School not found for admin." });
+    }
+
+    const schoolId = admin.school._id;
+
+    const updatedStudent = await Student.findOneAndUpdate(
+      { _id: id, schoolId },
+      updateData,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json(updatedStudent);
+  } catch (error) {
+    console.error("Error updating student:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// DELETE A PARTICULAR STUDENT USING IT'S ID
+exports.deleteStudentById = async (req, res) => {
+  const { id } = req.params; // Assuming the id is passed as a URL parameter
+  const adminId = req.user; // Authenticated admin's ID from the authMiddleware
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid student ID." });
+    }
+
+    const admin = await SchoolAdmin.findById(adminId).populate("school");
+    if (!admin) {
+      return res.status(401).json({ message: "Admin not found." });
+    }
+
+    if (!admin.school) {
+      return res.status(400).json({ message: "School not found for admin." });
+    }
+
+    const schoolId = admin.school._id;
+
+    const deletedStudent = await Student.findOneAndDelete({
+      _id: id,
+      schoolId,
+    });
+    if (!deletedStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
