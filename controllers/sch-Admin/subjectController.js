@@ -1,13 +1,9 @@
 require("dotenv").config();
 // studentController.js
 const Student = require("../../models/users/students/Student");
-const Class = require("../../models/users/students/Class");
-const Arm = require("../..//models/users/students/Arm");
-const School = require("../../models/users/students/School");
 const SchoolAdmin = require("../../models/users/SchoolAdmin");
 const Subject = require("../../models/results/Subject");
 const { validationResult } = require("express-validator"); // Example validation library
-// const { authMiddleware } = require("../../middleware/authMiddleware");
 const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
 const mongoose = require("mongoose");
 
@@ -230,5 +226,28 @@ exports.getSubjectsForStudent = async (req, res) => {
     res.status(200).json(student.subjects);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete all Subjects for a Student
+exports.deleteAllSubjectsForStudent = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Find the student by ID
+    const student = await Student.findById(studentId);
+
+    // Check if student exists
+    if (!student) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    // Remove all subjects from the student's subjects array
+    await Student.updateOne({ _id: studentId }, { $set: { subjects: [] } });
+
+    res.status(200).json({ message: "All subjects deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
   }
 };

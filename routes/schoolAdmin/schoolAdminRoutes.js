@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const schoolAdminController = require("../../controllers/sch-Admin/schoolAdminAuth");
 const schoolAdminStudentFunction = require("../../controllers/sch-Admin/student_functions");
-const schoolAdminSubjectResultFunction = require("../../controllers/sch-Admin/subject_result_functions");
+const subjectController = require("../../controllers/sch-Admin/subjectController");
 
 // importing the auth middleware
 const authMiddleware = require("../../middleware/authMiddleware");
@@ -24,25 +24,33 @@ router.get(
 router.post(
   "/subject/:studentId",
   authMiddleware,
-  schoolAdminSubjectResultFunction.createSubjectsForStudent
+  subjectController.createSubjectsForStudent
 );
 
 router.put(
   "/subject/:studentId",
   authMiddleware,
-  schoolAdminSubjectResultFunction.updateSubjectsForStudent
+  subjectController.updateSubjectsForStudent
 );
 
 router.get(
   "/subject/:studentId",
   authMiddleware,
-  schoolAdminSubjectResultFunction.getSubjectsForStudent
+  subjectController.getSubjectsForStudent
 );
 
+// DELETE request to delete all subjects for a student
+// router.delete(
+//   "/admin/subject/all/:studentId",
+//   authMiddleware,
+//   subjectController.deleteAllSubjectsForStudent
+// );
+
+// Delete a particular subject from a student
 router.delete(
   "/subject/:studentId/:subjectId",
   authMiddleware,
-  schoolAdminSubjectResultFunction.deleteSubjectForStudent
+  subjectController.deleteSubjectForStudent
 );
 
 //Other
