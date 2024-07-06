@@ -43,11 +43,9 @@ exports.createSubjectsForStudent = async (req, res) => {
     });
 
     if (!student) {
-      return res
-        .status(404)
-        .json({
-          message: "Student not found or does not belong to this school.",
-        });
+      return res.status(404).json({
+        message: "Student not found or does not belong to this school.",
+      });
     }
 
     // Create or update the student's subjects
@@ -107,11 +105,9 @@ exports.updateSubjectsForStudent = async (req, res) => {
     });
 
     if (!student) {
-      return res
-        .status(404)
-        .json({
-          message: "Student not found or does not belong to this school.",
-        });
+      return res.status(404).json({
+        message: "Student not found or does not belong to this school.",
+      });
     }
 
     // Create or update the student's subjects
@@ -144,8 +140,10 @@ exports.updateSubjectsForStudent = async (req, res) => {
 exports.deleteSubjectForStudent = async (req, res) => {
   try {
     const { studentId, subjectId } = req.params; // Student and Subject IDs from the request parameters
+    console.log(`Student ID: ${studentId}, Subject ID: ${subjectId}`);
 
     const adminId = req.user; // Authenticated admin's ID from the authMiddleware
+    console.log(`Admin ID: ${adminId}`);
 
     // Validate adminId
     if (!mongoose.Types.ObjectId.isValid(adminId)) {
@@ -154,6 +152,7 @@ exports.deleteSubjectForStudent = async (req, res) => {
 
     // Find the admin and populate the school reference
     const admin = await SchoolAdmin.findById(adminId).populate("school");
+    console.log(`Admin: ${admin}`);
 
     if (!admin) {
       return res.status(401).json({ message: "Admin not found." });
@@ -168,13 +167,19 @@ exports.deleteSubjectForStudent = async (req, res) => {
       _id: studentId,
       schoolId: admin.school._id,
     });
+    console.log(`Student: ${student}`);
 
     if (!student) {
+      return res.status(404).json({
+        message: "Student not found or does not belong to this school.",
+      });
+    }
+
+    // Check if the subject exists in the student's subjects
+    if (!student.subjects.includes(subjectId)) {
       return res
         .status(404)
-        .json({
-          message: "Student not found or does not belong to this school.",
-        });
+        .json({ message: "Subject not found for this student." });
     }
 
     // Remove the subject from the student's subjects
@@ -217,11 +222,9 @@ exports.getSubjectsForStudent = async (req, res) => {
     }).populate("subjects");
 
     if (!student) {
-      return res
-        .status(404)
-        .json({
-          message: "Student not found or does not belong to this school.",
-        });
+      return res.status(404).json({
+        message: "Student not found or does not belong to this school.",
+      });
     }
 
     res.status(200).json(student.subjects);

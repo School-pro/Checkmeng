@@ -32,6 +32,19 @@ router.put(
   authMiddleware,
   schoolAdminSubjectResultFunction.updateSubjectsForStudent
 );
+
+router.get(
+  "/subject/:studentId",
+  authMiddleware,
+  schoolAdminSubjectResultFunction.getSubjectsForStudent
+);
+
+router.delete(
+  "/subject/:studentId/:subjectId",
+  authMiddleware,
+  schoolAdminSubjectResultFunction.deleteSubjectForStudent
+);
+
 //Other
 // router.post("/students", schoolAdminController.inputStudentData);
 // router.post("/compute-results", schoolAdminController.computeStudentResults);
