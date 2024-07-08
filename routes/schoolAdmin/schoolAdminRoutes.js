@@ -2,7 +2,7 @@ const router = require("express").Router();
 const schoolAdminController = require("../../controllers/sch-Admin/schoolAdminAuth");
 const schoolAdminStudentFunction = require("../../controllers/sch-Admin/student_functions");
 const subjectController = require("../../controllers/sch-Admin/subjectController");
-
+const resultController = require("../../controllers/sch-Admin/resultController");
 // importing the auth middleware
 const authMiddleware = require("../../middleware/authMiddleware");
 
@@ -19,6 +19,9 @@ router.get(
   authMiddleware,
   schoolAdminStudentFunction.getAllStudentInASchool
 );
+
+// ROUTES FOR THE STUDENT RESULTS
+router.get("/result", authMiddleware, resultController.computeAndSaveResults);
 
 // ROUTES FOR STUDENTS SUBJECTS AND RESULTS
 router.post(
@@ -83,5 +86,7 @@ router.get(
   schoolAdminStudentFunction.findStudentById
 );
 
-// ROUTES FOR SUBJECTS
+// ROUTES FOR RESULTS
+// router.get
+
 module.exports = router;

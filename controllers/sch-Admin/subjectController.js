@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 
 // Create Subjects for a Student
 // Create Subjects for a Student
+// Create Subjects for a Student
 exports.createSubjectsForStudent = async (req, res) => {
   try {
     // Validate request body using a validation library
@@ -70,22 +71,19 @@ exports.createSubjectsForStudent = async (req, res) => {
 
     student.subjects = subjectIds;
 
-    // create or update the student result subjects
-    const result = new Result({
-      subjects: subjectIds,
-    });
+    // Create or update the student result subjects
+    let result = await Result.findOne({ studentId: student._id });
+    if (!result) {
+      result = new Result({
+        studentId: student._id,
+        subjects: subjectIds,
+      });
+    } else {
+      result.subjects = subjectIds;
+    }
     await result.save();
 
-    // Getting the id of the saved student result
-    studentResultId = result._id;
-
-    // Update the student result id
-    await Student.findOneAndUpdate(
-      { resultId: studentResultId },
-      // updateData
-      { new: true, runValidators: true }
-    );
-
+    student.resultId = result._id;
     await student.save();
 
     res.status(201).json(student);
@@ -93,7 +91,6 @@ exports.createSubjectsForStudent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Update Subjects for a Student
 exports.updateSubjectsForStudent = async (req, res) => {
   try {

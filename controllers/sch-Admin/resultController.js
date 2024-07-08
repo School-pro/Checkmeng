@@ -1,6 +1,5 @@
 // resultController.js
-const Result = require("../../models/resultModel");
-const Exam = require("../../models/examModel");
+const Result = require("../../models/results/Result");
 const Student = require("../../models/users/students/Student");
 const { validationResult } = require("express-validator"); // Example validation library
 
@@ -13,37 +12,32 @@ exports.computeAndSaveResults = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { studentId, examId, results } = req.body;
+
+    const { studentId } = req.body;
 
     // Check if the student exists
-    const student = await Student.findById(studentId);
+    const student = await Student.findById(studentId).populate({
+      path: 'resultId',
+      populate: {
+        path: 'subjects',
+        select: 'subject'
+      }
+    });
     if (!student) {
       return res.status(404).json({ message: "Student not found." });
     }
 
-    // Check if the exam exists
-    const exam = await Exam.findById(examId);
-    if (!exam) {
-      return res.status(404).json({ message: "Exam not found." });
+    // Check if the student has a result
+    if (!student.resultId) {
+      return res.status(404).json({ message: "No Result found for student." });
     }
 
-    // Validate and process results
-    const validatedResults = results.map((result) => ({
-      ...result,
-      studentId,
-      examId,
-    }));
-
-    // Save results to the database
-    const savedResults = await Result.insertMany(validatedResults);
-
-    res.status(201).json(savedResults);
+    res.status(201).json(student.resultId);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error." });
   }
 };
-
 // Grade Student based on Results
 exports.gradeStudent = async (req, res) => {
   try {
@@ -71,6 +65,60 @@ function calculateGrade(result) {
   // Example: grading based on score, thresholds, etc.
   return "A"; // Replace with actual logic
 }
+
+
+
+// #############################################################
+// ######## WORK HERE FOR THE UPDATE AND THE DELETE ############
+// #############################################################
+
+// Update a Result
+exports.updateResult = async (req, res) => {
+  try {
+    const { resultId } = req.params;
+    const updateData = req.body;
+
+    const result = await Result.findByIdAndUpdate(resultId, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!result) {
+      return res.status(404).json({ message: "Result not found." });
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
+// Delete a Result
+exports.deleteResult = async (req, res) => {
+  try {
+    const { resultId } = req.params;
+
+    const result = await Result.findByIdAndDelete(resultId);
+
+    if (!result) {
+      return res.status(404).json({ message: "Result not found." });
+    }
+
+    res.status(200).json({ message: "Result deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
+
+
+
+
+
+
+
 
 // Create a new Exam
 exports.createExam = async (req, res) => {
