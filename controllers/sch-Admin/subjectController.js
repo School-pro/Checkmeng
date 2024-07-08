@@ -9,8 +9,6 @@ const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
 const mongoose = require("mongoose");
 
 // Create Subjects for a Student
-// Create Subjects for a Student
-// Create Subjects for a Student
 exports.createSubjectsForStudent = async (req, res) => {
   try {
     // Validate request body using a validation library

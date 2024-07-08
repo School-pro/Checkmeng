@@ -87,6 +87,11 @@ router.get(
 );
 
 // ROUTES FOR RESULTS
-// router.get
 
+router.put("/result/:resultId", authMiddleware, resultController.updateResult);
+router.delete(
+  "/result/:resultId",
+  authMiddleware,
+  resultController.deleteResult
+);
 module.exports = router;

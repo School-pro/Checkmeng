@@ -17,11 +17,11 @@ exports.computeAndSaveResults = async (req, res) => {
 
     // Check if the student exists
     const student = await Student.findById(studentId).populate({
-      path: 'resultId',
+      path: "resultId",
       populate: {
-        path: 'subjects',
-        select: 'subject'
-      }
+        path: "subjects",
+        select: "subject",
+      },
     });
     if (!student) {
       return res.status(404).json({ message: "Student not found." });
@@ -66,8 +66,6 @@ function calculateGrade(result) {
   return "A"; // Replace with actual logic
 }
 
-
-
 // #############################################################
 // ######## WORK HERE FOR THE UPDATE AND THE DELETE ############
 // #############################################################
@@ -111,14 +109,6 @@ exports.deleteResult = async (req, res) => {
     res.status(500).json({ message: "Server error." });
   }
 };
-
-
-
-
-
-
-
-
 
 // Create a new Exam
 exports.createExam = async (req, res) => {
