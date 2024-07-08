@@ -23,6 +23,7 @@ const studentSchema = new mongoose.Schema({
     { value: "http://pictures.com/images/" },
     { default: "" },
   ],
+  resultId: { type: mongoose.Schema.Types.ObjectId, ref: "Result" },
   dateOfBirth: { type: Date, default: Date.now() },
   address: { type: String, required: true, default: "" },
   subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],

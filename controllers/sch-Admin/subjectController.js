@@ -3,6 +3,7 @@ require("dotenv").config();
 const Student = require("../../models/users/students/Student");
 const SchoolAdmin = require("../../models/users/SchoolAdmin");
 const Subject = require("../../models/results/Subject");
+const Result = require("../../models/results/Result");
 const { validationResult } = require("express-validator"); // Example validation library
 const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
 const mongoose = require("mongoose");
@@ -11,6 +12,12 @@ const mongoose = require("mongoose");
 // Create Subjects for a Student
 exports.createSubjectsForStudent = async (req, res) => {
   try {
+    // Validate request body using a validation library
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { studentId } = req.params; // Student ID from the request parameters
     const { subjects } = req.body; // Array of subjects from the request body
 
@@ -62,6 +69,23 @@ exports.createSubjectsForStudent = async (req, res) => {
     );
 
     student.subjects = subjectIds;
+
+    // create or update the student result subjects
+    const result = new Result({
+      subjects: subjectIds,
+    });
+    await result.save();
+
+    // Getting the id of the saved student result
+    studentResultId = result._id;
+
+    // Update the student result id
+    await Student.findOneAndUpdate(
+      { resultId: studentResultId },
+      // updateData
+      { new: true, runValidators: true }
+    );
+
     await student.save();
 
     res.status(201).json(student);

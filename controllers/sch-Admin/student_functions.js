@@ -9,7 +9,7 @@ const School = require("../../models/users/students/School");
 const SchoolAdmin = require("../../models/users/SchoolAdmin");
 const { validationResult } = require("express-validator"); // Example validation library
 // const { authMiddleware } = require("../../middleware/authMiddleware");
-const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
+// const { v4: uuidv4 } = require("uuid"); // For generating unique IDs
 const mongoose = require("mongoose");
 // Controller to register a student
 
