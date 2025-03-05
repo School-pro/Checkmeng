@@ -1,20 +1,20 @@
 import React from "react";
+
 import Hero from "../components/Hero";
+import Features from "../components/Features";
+import Testimonials from "../components/Testimonial";
+import CTA from "../components/CTA";
+
 import Footer from "../components/Footer";
+import { Template } from "ejs";
 
 const LandingPage = () => {
   return (
     <div>
       <Hero />
-
-      <div>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti
-          accusantium exercitationem rerum dignissimos voluptas expedita
-          doloribus, quidem accusamus debitis eligendi, quo placeat eius rem
-          nisi dicta saepe asperiores neque!
-        </p>
-      </div>
+      <Features />
+      <Testimonials />
+      <CTA />
       <Footer />
     </div>
   );
